@@ -1,8 +1,3 @@
--- on BufEnter replace current file type configuration
--- {
--- filetype(key) = {
---  action_name = function_callback
--- }
 _G.__CurrentActions = {}
 
 local action = {}
