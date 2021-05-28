@@ -14,6 +14,7 @@ Ordered by priority of selection:
 require('actions'):setup {
   mappings = {
     ['n ,b'] = 'build'
+    ['n ,r'] = 'run'
   },
   projects = {
     ['~/src/github.com/amirrezaask/worker'] = {
@@ -27,6 +28,9 @@ require('actions'):setup {
       build = function(bufnr)
         -- This function runs when build keymap is pressed and we are in a lua file
         print('lua build command')
+      end,
+      run = function(bufnr)
+        vim.cmd(string.format("luafile %s", vim.api.nvim_buf_get_name(bufnr)))
       end
     },
     go = {
