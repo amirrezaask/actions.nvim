@@ -31,7 +31,22 @@ end
 
 function action:exec(bufnr, name)
   local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  local project_path = vim.fn.expand(vim.loop.cwd())
+  local project_actions 
+  if _G.__CurrentActions['projects'] then
+    for p, as in pairs(_G.__CurrentActions['projects']) do 
+      if vim.fn.expand(p) == project_path then
+        project_actions = as 
+      end
+    end
+  end
   local ft_actions = _G.__CurrentActions['filetypes'][filetype]
+  if project_actions then
+    if project_actions[name] then
+      project_actions[name](bufnr)
+      return
+    end
+  end
   if ft_actions then
     local ft_action = ft_actions[name]
     if ft_action then

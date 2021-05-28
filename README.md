@@ -3,11 +3,25 @@ In all IDEs out there ( for example Jetbrains Intelij,... ) there is a consisten
 
 Actions.nvim brings this idea in neovim space, you can define actions for different languages and bind them to the same keymap.
 
+## Action Filters
+Action Filters are the way we choose what function to call for a keymap.
+Ordered by priority:
+- Projects
+- Filetypes
+Basically we check if there is any action for the current project ( your cwd ) and if nothing found then we check for the filetype.
+
 ## Usage
 ```lua
 require('actions'):setup {
   mappings = {
     ['n ,b'] = 'build'
+  },
+  projects = {
+    ['~/src/github.com/amirrezaask/worker'] = {
+      build = function(bufnr)
+        print("project worker build command")
+      end
+    }
   },
   filetypes = {
     lua = {
