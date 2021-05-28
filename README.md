@@ -5,10 +5,9 @@ Actions.nvim brings this idea in neovim space, you can define actions for differ
 
 ## Action Filters
 Action Filters are the way we choose what function to call for a keymap.
-Ordered by priority:
+Ordered by priority of selection:
 - Projects
 - Filetypes
-Basically we check if there is any action for the current project ( your cwd ) and if nothing found then we check for the filetype.
 
 ## Usage
 ```lua
