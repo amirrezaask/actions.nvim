@@ -1,7 +1,7 @@
 # actions.nvim
 In all IDEs out there ( for example Jetbrains Intelij,... ) there is a consistent interface for doing same action for different languages, for example the green play button always runs the project no matter what is the language or the framework.
 
-Actions.nvim brings this idea in neovim space, you can define actions for different languages and bind them to the same keymap.
+actions.nvim brings this idea to neovim space, providing a simple API to define actions for filetypes or even define actions per project.
 
 ## Action Filters
 Action Filters are the way we choose what function to call for a keymap.
