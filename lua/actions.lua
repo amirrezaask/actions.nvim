@@ -1,7 +1,10 @@
-_G.__CurrentActions = {}
+_G.__CurrentActions = nil
 
-local action = {}
-action.__index = action
+local actions = {}
+actions.__index = actions
+actions.__newindex = function(_, k, v)
+  _G.__CurrentActions[k] = v
+end
 
 local function map(key, name)
   local mode = ''
@@ -17,19 +20,19 @@ local function map(key, name)
   {noremap=true})
 end
 
-function action:set_mappings()
+function actions:set_mappings()
   for k, n in pairs(self.mappings) do
     map(k, n)
   end
 end
 
-function action:setup(opts)
-  _G.__CurrentActions = setmetatable(opts, action)
+function actions:setup(opts)
+  _G.__CurrentActions = setmetatable(opts, actions)
   __CurrentActions:set_mappings()
   return _G.__CurrentActions
 end
 
-function action:exec(bufnr, name)
+function actions:exec(bufnr, name)
   local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
   local project_path = vim.fn.expand(vim.loop.cwd())
   local project_actions 
@@ -55,4 +58,9 @@ function action:exec(bufnr, name)
   end
 end
 
-return action
+return setmetatable({}, {
+  __index = function(_, k)
+    if _G.__CurrentActions ~= nil then return _G.__CurrentActions[k] end
+    return actions[k]
+  end
+})
