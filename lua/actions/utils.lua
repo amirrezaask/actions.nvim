@@ -18,4 +18,15 @@ function utils.make_abs_path_predicate(path)
   end
 end
 
+function utils.compose(...)
+  local ps = {...}
+  return function(bufnr)
+    local output = true
+    for _, p in ipairs(ps) do
+      output = output and p(bufnr)
+    end
+    return output
+  end
+end
+
 return utils
